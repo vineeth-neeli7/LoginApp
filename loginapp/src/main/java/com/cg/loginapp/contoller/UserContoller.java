@@ -23,7 +23,7 @@ public class UserContoller {
 	public ResponseEntity<String> signUpPage(@RequestBody UserDTO userDto) throws SignUpExceptions
 	{
 		service.addSignUpDetails(userDto);
-		return new ResponseEntity("Added Successfully",HttpStatus.ACCEPTED);
+		return new ResponseEntity<>("Added Successfully",HttpStatus.ACCEPTED);
 	}
 	
 	//@PostMapping(value="/Login")

@@ -40,7 +40,12 @@
         <dependency>
    			<groupId>org.hibernate.validator</groupId>
    			<artifactId>hibernate-validator</artifactId>
-   		<version>7.0.0.Final</version>
+   		    <version>7.0.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 

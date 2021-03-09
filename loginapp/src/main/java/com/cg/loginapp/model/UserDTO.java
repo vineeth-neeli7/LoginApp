@@ -11,8 +11,6 @@ public class UserDTO {
 	    private String dob;
 	    private String phoneNo;
 	    private String password;
-	    
-
 		private String reTypePassword;
 	    private String securityQue="What is your birth place?";
 	    private String securityAns;
