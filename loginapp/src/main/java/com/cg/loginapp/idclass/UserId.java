@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class UserId implements Serializable {
     private String emailId;
-    private String userType;
+	private String userType;
 
     public UserId()
     {
@@ -16,5 +16,21 @@ public class UserId implements Serializable {
         this.userType = usertype;
     }
    
+    public String getEmailId() {
+		return emailId;
+	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
 }
 

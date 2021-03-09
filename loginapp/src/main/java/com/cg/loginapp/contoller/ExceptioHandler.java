@@ -13,7 +13,7 @@ public class ExceptioHandler {
 	@ExceptionHandler(SignUpExceptions.class)
 	public ResponseEntity<String> signupexceptions(SignUpExceptions s)
 	{
-		return new ResponseEntity(s.getMessage(),HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(s.getMessage(),HttpStatus.BAD_REQUEST);
 	}
 
 }

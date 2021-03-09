@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 import com.cg.loginapp.idclass.UserId;
 
-//import com.cg.annotation;
+
 @Entity
 @Table(name="users")
 @IdClass(UserId.class)
@@ -36,8 +36,7 @@ public class User{
     @Column(name="Password")
     private String password;
     
-    @Column(name="reTypePassword")
-    private String reTypePassword;
+   
 
 	public String getEmailId() {
 		return emailId;
@@ -93,14 +92,6 @@ public class User{
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getReTypePassword() {
-		return reTypePassword;
-	}
-
-	public void setReTypePassword(String reTypePassword) {
-		this.reTypePassword = reTypePassword;
 	}
 
 	public String getSecurityQue() {
