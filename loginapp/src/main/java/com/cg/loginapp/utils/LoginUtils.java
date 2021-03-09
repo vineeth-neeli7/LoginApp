@@ -33,7 +33,19 @@ public class LoginUtils {
 			dtolist.add(convertToUserDTO(user));
 		return dtolist;
 	}
-	
+	public static UserDTO convertToUserDTO(User user) {
+	       UserDTO userdto=new UserDTO();
+	       userdto.setDob(user.getDob());
+	       userdto.setEmailId(user.getEmailId());
+	       userdto.setUserType(user.getUserType());
+	       userdto.setPassword(user.getPassword());
+	       userdto.setFirstName(user.getFirstName());
+	       userdto.setLastName(user.getLastName());
+	       userdto.setPhoneNo(user.getPhoneNo());
+	       userdto.setSecurityQue(user.getSecurityQue());
+	       userdto.setSecurityAns(user.getSecurityAns());
+	       return userdto;
+	}
 	
 	
 	public static AdminDTO convertToAdminDTO(User user)

@@ -30,19 +30,7 @@ public class UserServices {
 	Pattern pString = Pattern.compile("[a-zA-Z]*");
 	
 	public String login(String emailId,String password,String userType) {
-		if(userType.equals("Admin"))
-		{
-			Admin admin=adminrepo.findById(emailId).get();
-			if(admin.getAdminPassword().equals(password))
-			{
-				return "Login successfully";
-			}
-			else
-			{
-				return "Invalid password ";
-			}
-		}
-		else {
+		
 		User appuser=repo.findByCid(emailId,userType);
         
 		 if(appuser.getPassword().equals(password))
@@ -53,11 +41,20 @@ public class UserServices {
 		{
 			return "Invalid password or Email id or user type";
 		}	
-		}
+		
 	}
 	
-	
-	
+	public String adminLogin(String emailId,String password) {
+			Admin admin=adminrepo.findById(emailId).get();
+			if(admin.getAdminPassword().equals(password))
+			{
+				return "Login successfully";
+			}
+			else
+			{
+				return "Invalid password ";
+			}
+	}
 	public static boolean passwordIsValid(String password) {
 
 	    Pattern specialCharPatten = Pattern.compile("[~!@#$%^&*_-]");
@@ -80,7 +77,7 @@ public class UserServices {
 	public void addSignUpDetails(UserDTO udto) throws SignUpExceptions
 	{
 		Matcher mEmail = pEmail.matcher(udto.getEmailId());
-		Matcher mDate = pDate.matcher(udto.getDob());
+		//Matcher mDate = pDate.matcher(udto.getDob());
 		Matcher mFirstName = pString.matcher(udto.getFirstName()); 
 		Matcher mLastName = pString.matcher(udto.getLastName());
 		Matcher mSecurityAns = pString.matcher(udto.getSecurityAns());
@@ -93,7 +90,7 @@ public class UserServices {
 		
 		else if(!mEmail.matches() || udto.getEmailId().isBlank()) throw new SignUpExceptions("Email is invalid");
 		
-		else if(!mDate.matches() || udto.getDob().isBlank()) throw new SignUpExceptions("Invalid Date of Birth");
+		//else if(!mDate.matches() || udto.getDob().isBlank()) throw new SignUpExceptions("Invalid Date of Birth");
 		
 		else if(repo.findByCid(udto.getEmailId(),udto.getUserType())!=null) throw new SignUpExceptions("User is already present");
 		
