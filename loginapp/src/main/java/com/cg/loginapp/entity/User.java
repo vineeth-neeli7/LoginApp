@@ -36,8 +36,6 @@ public class User{
     @Column(name="Password")
     private String password;
     
-    @Column(name="reTypePassword")
-    private String reTypePassword;
 
 	public String getEmailId() {
 		return emailId;
@@ -95,13 +93,6 @@ public class User{
 		this.password = password;
 	}
 
-	public String getReTypePassword() {
-		return reTypePassword;
-	}
-
-	public void setReTypePassword(String reTypePassword) {
-		this.reTypePassword = reTypePassword;
-	}
 
 	public String getSecurityQue() {
 		return securityQue;

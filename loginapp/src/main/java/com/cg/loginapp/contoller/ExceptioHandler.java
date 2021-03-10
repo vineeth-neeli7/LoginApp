@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ExceptioHandler {
 	
 	@ExceptionHandler(SignUpExceptions.class)
-	public ResponseEntity<String> signupexceptions(SignUpExceptions s)
+	public ResponseEntity<String> signUpExceptions(SignUpExceptions s)
 	{
 		return new ResponseEntity(s.getMessage(),HttpStatus.BAD_REQUEST);
 	}
