@@ -1,7 +1,5 @@
 package com.cg.loginapp.idclass;
-/**
- * @author Neelambari k
- */
+
 import java.io.Serializable;
 
 public class UserId implements Serializable {

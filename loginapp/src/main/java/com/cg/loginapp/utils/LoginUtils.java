@@ -1,15 +1,5 @@
 package com.cg.loginapp.utils;
-<<<<<<< Updated upstream
 
-=======
-/**
- * @author Neelambari k
- */
-import java.util.ArrayList;
-import java.util.List;
-
-import com.cg.loginapp.entity.Admin;
->>>>>>> Stashed changes
 import com.cg.loginapp.entity.User;
 import com.cg.loginapp.model.UserDTO;
 
@@ -27,4 +17,19 @@ public class LoginUtils {
 	       user.setSecurityAns(userdto.getSecurityAns());
 	       return user;
 	}
+	
+	public static UserDTO convertToUsetDTO(User user) {
+	       UserDTO userdto=new UserDTO();
+	       userdto.setDob(user.getDob());
+	       userdto.setEmailId(user.getEmailId());
+	       userdto.setUserType(user.getUserType());
+	       userdto.setPassword(user.getPassword());
+	       userdto.setFirstName(user.getFirstName());
+	       userdto.setLastName(user.getLastName());
+	       userdto.setPhoneNo(user.getPhoneNo());
+	       userdto.setSecurityQue(user.getSecurityQue());
+	       userdto.setSecurityAns(user.getSecurityAns());
+	       return userdto;
+	}
+	
 }

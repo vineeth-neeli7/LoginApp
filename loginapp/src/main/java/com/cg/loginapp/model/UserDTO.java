@@ -1,7 +1,5 @@
 package com.cg.loginapp.model;
-/**
- * @author Neelambari k
- */
+
 import org.springframework.stereotype.Component;
 
 @Component

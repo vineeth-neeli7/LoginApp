@@ -1,5 +1,6 @@
 package com.cg.loginapp.service;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,64 +21,56 @@ public class UserServices {
 	LoginRepository repo;
 	
 	Pattern pEmail = Pattern.compile("^(.+)@(.+)$");
-<<<<<<< Updated upstream
-	Pattern pDate = Pattern.compile("^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$");
-=======
-	
->>>>>>> Stashed changes
+	//Pattern pDate = Pattern.compile("^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$");
 	Pattern pString = Pattern.compile("[a-zA-Z]*");
 	
-	public String login(String emailId,String password,String userType) {
+	public String login(String emailId,String password,String userType) throws SignUpExceptions,NullPointerException{
 		User appuser=repo.findByCid(emailId,userType);
-
-		 if(appuser.getPassword()==password)
+       
+		try {
+		if(appuser.getPassword().equals(password))
 		{
 			return "Login successfully";
 		}
-		else
-		{
-			return "Invalid password or Email id or user type";
-		}	
-<<<<<<< Updated upstream
-	}
-=======
 		}
+		catch(NullPointerException e)
+		{
+			throw new SignUpExceptions("Login Unsuccessful .. Invalid Password or Email or UserType ");	 
+		}
+		
+		return "UnSuccessful";
+	}
 	
->>>>>>> Stashed changes
-	
-	public String register(UserDTO userdto)
+	/*public String register(UserDTO userdto)
 	{
 		repo.saveAndFlush(LoginUtils.convertTouser(userdto));
 		return "Registered successfully";
-	}
+	}*/
 	
 	public static boolean passwordIsValid(String password) {
 
-	    Pattern specialCharPatten = Pattern.compile("[~!@#$%^&*_-+=]");
+	    Pattern specialCharPatten = Pattern.compile("[~!@#$%^&*_-]");
 	    Pattern UpperCasePatten = Pattern.compile("[A-Z ]");
 	    Pattern lowerCasePatten = Pattern.compile("[a-z ]");
 	    Pattern digitCasePatten = Pattern.compile("[0-9 ]");
 	    
-	    boolean flag=true;
+	    boolean flag=false;
 
-	    if (password.length() < 8 || !specialCharPatten.matcher(password).find() || 
-	    	!UpperCasePatten.matcher(password).find() || !lowerCasePatten.matcher(password).find() || 
-	    		!digitCasePatten.matcher(password).find()) {
-	        flag=false;
+	    if (password.length() >= 8 && specialCharPatten.matcher(password).find() && 
+	    	UpperCasePatten.matcher(password).find() && lowerCasePatten.matcher(password).find() && 
+	    		digitCasePatten.matcher(password).find()) {
+	        flag=true;
 	    }
 
 	    return flag;
 
 	}
 	
+	
 	public void addSignUpDetails(UserDTO udto) throws SignUpExceptions
 	{
 		Matcher mEmail = pEmail.matcher(udto.getEmailId());
-<<<<<<< Updated upstream
-		Matcher mDate = pDate.matcher(udto.getDob());
-=======
-		
->>>>>>> Stashed changes
+		//Matcher mDate = pDate.matcher(udto.getDob());
 		Matcher mFirstName = pString.matcher(udto.getFirstName()); 
 		Matcher mLastName = pString.matcher(udto.getLastName());
 		Matcher mSecurityAns = pString.matcher(udto.getSecurityAns());
@@ -86,15 +79,11 @@ public class UserServices {
 		
 		else if(!mLastName.matches() ||udto.getLastName().isBlank()) throw new SignUpExceptions("LastName is not valid ");
 		
-		else if(udto.getPhoneNo().length() > 10 || udto.getPhoneNo().length() < 10) throw new SignUpExceptions("Phone Number is not valid");
+		else if(udto.getPhoneNo().length() != 10) throw new SignUpExceptions("Phone Number is not valid");
 		
 		else if(!mEmail.matches() || udto.getEmailId().isBlank()) throw new SignUpExceptions("Email is invalid");
 		
-<<<<<<< Updated upstream
-		else if(!mDate.matches() || udto.getDob().isBlank()) throw new SignUpExceptions("Invalid Date of Birth");
-=======
-		
->>>>>>> Stashed changes
+		//else if(!mDate.matches() || udto.getDob().isBlank()) throw new SignUpExceptions("Invalid Date Of Birth");
 		
 		else if(repo.findByCid(udto.getEmailId(),udto.getUserType())!=null) throw new SignUpExceptions("User is already present");
 		
@@ -102,9 +91,9 @@ public class UserServices {
 		
 		else if(!mSecurityAns.matches() || udto.getSecurityAns().isBlank()) throw new SignUpExceptions("Securitu Answer is not valid");
 		
-		else if(passwordIsValid(udto.getPassword())) throw new SignUpExceptions("Password must contains atleast one UpperCase, LowerCase, SpecialCharacter, Numeric");
+		else if(!passwordIsValid(udto.getPassword())) throw new SignUpExceptions("Password must contains atleast one UpperCase, LowerCase, SpecialCharacter, Numeric");
 		
-		else if(udto.getPassword()!=udto.getReTypePassword()) throw new SignUpExceptions("ReTypePassword should be same as Password");
+		else if(!udto.getPassword().equals(udto.getReTypePassword())) throw new SignUpExceptions("ReTypePassword should be same as Password");
 		
 		else {
 		User u = LoginUtils.convertTouser(udto);
@@ -113,6 +102,37 @@ public class UserServices {
 		}
 	}
 	
-
+	public String forgotPassword(String emailId , String userType , String securityAns , String newPassword , String reTypePassword) throws SignUpExceptions,NullPointerException
+	{
+		User u = repo.findByCid(emailId, userType);
+		
+		try { 
+			if(!passwordIsValid(newPassword) || !u.getSecurityAns().equals(securityAns) || !newPassword.equals(reTypePassword))
+			{
+				throw new SignUpExceptions("Security Answer is Incorrect or Enter valid Password");
+			}
+			else
+			{
+				u.setPassword(newPassword);
+				repo.saveAndFlush(u);
+			}
+			}
+			catch(NullPointerException e)
+			{
+				throw new SignUpExceptions("User is Not found");
+			}
+		
+		return "Changed Successfully";
+	}
+	
+	
+	public List<User> getDetails()
+	{
+		return repo.findAll();
+	}
+	
+    
+	
+	
 }
 
