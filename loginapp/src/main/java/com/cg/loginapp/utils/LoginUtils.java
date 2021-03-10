@@ -1,5 +1,15 @@
 package com.cg.loginapp.utils;
+<<<<<<< Updated upstream
 
+=======
+/**
+ * @author Neelambari k
+ */
+import java.util.ArrayList;
+import java.util.List;
+
+import com.cg.loginapp.entity.Admin;
+>>>>>>> Stashed changes
 import com.cg.loginapp.entity.User;
 import com.cg.loginapp.model.UserDTO;
 
