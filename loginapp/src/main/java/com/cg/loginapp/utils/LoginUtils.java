@@ -1,7 +1,11 @@
 package com.cg.loginapp.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.cg.loginapp.entity.User;
 import com.cg.loginapp.model.UserDTO;
+
 
 public class LoginUtils {
 	public static User convertTouser(UserDTO userdto) {
@@ -30,6 +34,15 @@ public class LoginUtils {
 	       userdto.setSecurityQue(user.getSecurityQue());
 	       userdto.setSecurityAns(user.getSecurityAns());
 	       return userdto;
+	       
+	       
+	}
+	
+	public static List<UserDTO> convertToUserDtoList(List<User> list){
+		List<UserDTO> dtolist = new ArrayList<>();
+		for(User user : list) 
+			dtolist.add(convertToUsetDTO(user));
+		return dtolist;
 	}
 	
 }

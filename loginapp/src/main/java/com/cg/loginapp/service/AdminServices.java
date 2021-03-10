@@ -14,7 +14,6 @@ import com.cg.loginapp.contoller.UserNotFoundException;
 import com.cg.loginapp.entity.User;
 import com.cg.loginapp.model.UserDTO;
 import com.cg.loginapp.repository.LoginRepository;
-import com.cg.loginapp.utils.LoginUtils;
 
 
 @Service
@@ -22,16 +21,19 @@ public class AdminServices {
 	@Autowired
 	LoginRepository repo;
 	
-	UserServices userServices=new UserServices();
+	@Autowired
+	UserServices userServices; 
 	
 	public  String addUser(UserDTO userdto) throws SignUpExceptions
 	{
 		userServices.addSignUpDetails(userdto);
 		return "Added successfully";
-	}
+	} 
+	
 	public String updateUser(String emailId,String userType,UserDTO userdto) throws UserNotFoundException
 	{
-Optional<User> optional= Optional.of(repo.findByCid(emailId,userType));
+		try {
+      Optional<User> optional= Optional.of(repo.findByCid(emailId,userType));
 		
 		if(optional.isPresent()) {
 			User user= optional.get();
@@ -41,43 +43,57 @@ Optional<User> optional= Optional.of(repo.findByCid(emailId,userType));
 		    user.setLastName(userdto.getLastName());
 	        user.setPhoneNo(userdto.getPhoneNo());
  	        user.setSecurityAns(userdto.getSecurityAns());
-			return "Updated successsfully";
+			repo.saveAndFlush(user);
 		}
-		else {
+		}
+		catch(NullPointerException e){
 			throw new UserNotFoundException("User not found for the given id,Update process failed");
 		}
-	}
-	public List<UserDTO> listAllUsers(){
-		 List<User> list=repo.findAll();
-		 return LoginUtils.convertToUserDtoList(list);
+		
+		return "Updated successsfully";
 	}
 	
-	public UserDTO listUser(String emailId,String userType) throws UserNotFoundException
+	public List<User> listAllUsers(){
+		 return repo.findAll();
+	} 
+	 
+	public User listUser(String emailId,String userType) throws UserNotFoundException
 	{
+	  
+	  User user = new User();
+		try {
        Optional<User> optional= Optional.of(repo.findByCid(emailId,userType));
 		
 		if(optional.isPresent()) {
-			User user= optional.get();
-			return LoginUtils.convertToUserDTO(user);
+			user= optional.get();
 		}
-		else {
+		}
+		catch(NullPointerException e) {
 			throw new UserNotFoundException("User not found for the given id,List process failed");
 		}
+		
+		return user;
+		
 	}
 	
 	public String deleteUser(String emailId,String userType)throws UserNotFoundException {
+		try {
 		Optional<User> optional = Optional.of(repo.findByCid(emailId,userType));  
 		User user;
 		if(optional.isPresent()) {
 			  user= optional.get();
+			  repo.delete(user);
+		} 
+		 
 		}
-		else{
+		catch(NullPointerException e){
 			throw new UserNotFoundException("User not available ,Delete operation failed");
 			
 		}
 			
-		repo.delete(user);
-		return "Deleted successfully";
+		return "Deleted successfully"; 
 	}
+	
+	
 	
 }

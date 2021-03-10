@@ -8,7 +8,6 @@ import javax.persistence.Table;
 
 import com.cg.loginapp.idclass.UserId;
 
-//import com.cg.annotation;
 @Entity
 @Table(name="users")
 @IdClass(UserId.class)

@@ -1,5 +1,10 @@
 package com.cg.loginapp.service;
 
+/**
+ * author --> Sai Vineeth Neeli 
+ */
+
+
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.loginapp.contoller.SignUpExceptions;
+import com.cg.loginapp.entity.Admin;
 import com.cg.loginapp.entity.User;
 import com.cg.loginapp.model.UserDTO;
+import com.cg.loginapp.repository.AdminRepository;
 import com.cg.loginapp.repository.LoginRepository;
 import com.cg.loginapp.utils.LoginUtils;
 
@@ -20,8 +27,10 @@ public class UserServices {
 	@Autowired
 	LoginRepository repo;
 	
+	@Autowired
+	AdminRepository adminRepo;
+	
 	Pattern pEmail = Pattern.compile("^(.+)@(.+)$");
-	//Pattern pDate = Pattern.compile("^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$");
 	Pattern pString = Pattern.compile("[a-zA-Z]*");
 	
 	public String login(String emailId,String password,String userType) throws SignUpExceptions,NullPointerException{
@@ -40,12 +49,6 @@ public class UserServices {
 		
 		return "UnSuccessful";
 	}
-	
-	/*public String register(UserDTO userdto)
-	{
-		repo.saveAndFlush(LoginUtils.convertTouser(userdto));
-		return "Registered successfully";
-	}*/
 	
 	public static boolean passwordIsValid(String password) {
 
@@ -70,7 +73,6 @@ public class UserServices {
 	public void addSignUpDetails(UserDTO udto) throws SignUpExceptions
 	{
 		Matcher mEmail = pEmail.matcher(udto.getEmailId());
-		//Matcher mDate = pDate.matcher(udto.getDob());
 		Matcher mFirstName = pString.matcher(udto.getFirstName()); 
 		Matcher mLastName = pString.matcher(udto.getLastName());
 		Matcher mSecurityAns = pString.matcher(udto.getSecurityAns());
@@ -82,8 +84,6 @@ public class UserServices {
 		else if(udto.getPhoneNo().length() != 10) throw new SignUpExceptions("Phone Number is not valid");
 		
 		else if(!mEmail.matches() || udto.getEmailId().isBlank()) throw new SignUpExceptions("Email is invalid");
-		
-		//else if(!mDate.matches() || udto.getDob().isBlank()) throw new SignUpExceptions("Invalid Date Of Birth");
 		
 		else if(repo.findByCid(udto.getEmailId(),udto.getUserType())!=null) throw new SignUpExceptions("User is already present");
 		
@@ -125,14 +125,28 @@ public class UserServices {
 		return "Changed Successfully";
 	}
 	
-	
+	 
 	public List<User> getDetails()
 	{
 		return repo.findAll();
 	}
 	
-    
-	
+	public String adminlogin(String emailId,String password) throws SignUpExceptions,NullPointerException{
+		Admin appuser=adminRepo.findById(emailId).get();
+       
+		try {
+		if(appuser.getAdminPassword().equals(password))
+		{
+			return "Login successfully";
+		}
+		}
+		catch(NullPointerException e)
+		{
+			throw new SignUpExceptions("Login Unsuccessful .. Invalid Password or Email ");	 
+		}
+		
+		return "UnSuccessful";
+	}
 	
 }
 

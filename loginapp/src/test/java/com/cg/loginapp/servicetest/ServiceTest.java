@@ -1,11 +1,14 @@
 package com.cg.loginapp.servicetest;
 
+/**
+ * author --> Sai Vineeth Neeli 
+ */
+
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+//import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import org.junit.runner.RunWith;
@@ -192,7 +195,7 @@ class ServiceTest {
 		 	}catch(SignUpExceptions e) {}
 			
 			try {
-			assertEquals(service.login("vineeth@gmail.com","Va1234563#","doc"),"Login successfully");
+			assertEquals("Login successfully",service.login("vineeth@gmail.com","Va1234563#","doc"));
 			}
 			catch(SignUpExceptions | NullPointerException e) { }
 		}
@@ -211,7 +214,7 @@ class ServiceTest {
 		 	}catch(SignUpExceptions e) {}
 			
 			try {
-				assertEquals(service.forgotPassword("vineeth@gmail.com","doc","hey","Va1234562#","Va1234562#"),"Changed Successfully");
+				assertEquals("Changed Successfully",service.forgotPassword("vineeth@gmail.com","doc","hey","Va1234562#","Va1234562#"));
 				}
 				catch(SignUpExceptions | NullPointerException e) { }
 		}
