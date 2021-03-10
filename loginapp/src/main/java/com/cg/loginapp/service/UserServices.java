@@ -20,7 +20,11 @@ public class UserServices {
 	LoginRepository repo;
 	
 	Pattern pEmail = Pattern.compile("^(.+)@(.+)$");
+<<<<<<< Updated upstream
 	Pattern pDate = Pattern.compile("^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$");
+=======
+	
+>>>>>>> Stashed changes
 	Pattern pString = Pattern.compile("[a-zA-Z]*");
 	
 	public String login(String emailId,String password,String userType) {
@@ -34,7 +38,12 @@ public class UserServices {
 		{
 			return "Invalid password or Email id or user type";
 		}	
+<<<<<<< Updated upstream
 	}
+=======
+		}
+	
+>>>>>>> Stashed changes
 	
 	public String register(UserDTO userdto)
 	{
@@ -64,7 +73,11 @@ public class UserServices {
 	public void addSignUpDetails(UserDTO udto) throws SignUpExceptions
 	{
 		Matcher mEmail = pEmail.matcher(udto.getEmailId());
+<<<<<<< Updated upstream
 		Matcher mDate = pDate.matcher(udto.getDob());
+=======
+		
+>>>>>>> Stashed changes
 		Matcher mFirstName = pString.matcher(udto.getFirstName()); 
 		Matcher mLastName = pString.matcher(udto.getLastName());
 		Matcher mSecurityAns = pString.matcher(udto.getSecurityAns());
@@ -77,7 +90,11 @@ public class UserServices {
 		
 		else if(!mEmail.matches() || udto.getEmailId().isBlank()) throw new SignUpExceptions("Email is invalid");
 		
+<<<<<<< Updated upstream
 		else if(!mDate.matches() || udto.getDob().isBlank()) throw new SignUpExceptions("Invalid Date of Birth");
+=======
+		
+>>>>>>> Stashed changes
 		
 		else if(repo.findByCid(udto.getEmailId(),udto.getUserType())!=null) throw new SignUpExceptions("User is already present");
 		

@@ -1,5 +1,7 @@
 package com.cg.loginapp.entity;
-
+/**
+ * @author Neelambari k
+ */
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
